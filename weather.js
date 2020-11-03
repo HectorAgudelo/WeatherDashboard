@@ -23,9 +23,25 @@ function inputCity (){
 
 
 function paramsResponse (response){
+var icon = response.list[0].weather[0].icon;
+var iconImage = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+var time = response.list[0].dt;
 var cityName = response.city.name;
 var currentTemperature = response.list[0].main.temp;
 var currentHumidity = response.list[0].main.humidity;
 var currentWindSpeed = response.list[0].wind.speed;
-console.log(response, "\n", currentWindSpeed);
+
+var city = $(`<h3>${cityName}</h3>`).addClass("cityName");
+var cityTime = $(`<h3>${timeConvertion(time)}</h3>`).addClass("cityTime");
+var iconWeather = $(`<img>${iconImage}</img>`).addClass("iconWeather");
+
+$(".jumbotron").append(city, cityTime, iconWeather);
+
+console.log(city);
+}
+
+function timeConvertion(time){
+var myDate = new Date(time*1000);
+var fixDate = myDate.toDateString(); 
+return fixDate;
 }

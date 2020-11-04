@@ -31,11 +31,13 @@ var currentTemperature = response.list[0].main.temp;
 var currentHumidity = response.list[0].main.humidity;
 var currentWindSpeed = response.list[0].wind.speed;
 
-var cityInfo = $(`<h4>${cityName} (${timeConvertion(time)}) <img src = ${iconImage}></h4>`).addClass("cityInfo");
+var cityInfo = $(`<h5>${cityName} (${timeConvertion(time)}) <img src = ${iconImage}></h5>`).addClass("cityInfo");
+var temp = $("<p>").html("Temperature: "+currentTemperature+"°F").addClass("temp");
+var humidity = $("<p>").html("Humidity: "+currentHumidity+"%").addClass("humidity");
+var windS = $("<p>").html("Wind Speed: "+currentWindSpeed+"MPH").addClass("windS")
 
-$(".jumbotron").append(cityInfo);
-
-console.log(city);
+$(".jumbotron").append(cityInfo,temp, humidity, windS);
+console.log(cityInfo);
 }
 
 function timeConvertion(time){

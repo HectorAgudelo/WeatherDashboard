@@ -24,8 +24,9 @@ function inputCity() {
 
 
 function paramsResponse(response) {
-    console.log(response);
+   
     var list = response.list;
+    console.log(list)
     var icon = response.list[0].weather[0].icon;
     var iconImage = `http://openweathermap.org/img/wn/${icon}@2x.png`;
     var time = response.list[0].dt;
@@ -41,8 +42,8 @@ function paramsResponse(response) {
 
     $(".jumbotron").append(cityInfo, temp, humidity, windS);
     
-    for (var i = 0; i < list.lenght; i=i+8){
-        
+    for (var i = 8; i <= 40; i=i+8){
+        console.log(i);
     }
   
 }

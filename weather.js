@@ -2,31 +2,40 @@
 //key: 553d585c0846075ef308968537c38ec7
 //api.openweathermap.org/data/2.5/forecast?q=newyork&appid=553d585c0846075ef308968537c38ec7
 //api.openweathermap.org/data/2.5/forecast/daily?q=chicago&cnt=5&appid=402816eb769161d2bf2eccbb8107f1e4
+
+
 $(".btn").click(function (event) {
-    event.preventDefault();
-    var queryURL = inputCity();
     
+    event.preventDefault();
+    
+
+    var queryURL = inputCity();
+
     $.ajax({
         url: queryURL,
-        method: "GET"
+        method: "GET",
     }).then(paramsResponse);
+    
 })
 
 function inputCity() {
-
+    
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var queryParams = { "appid": "553d585c0846075ef308968537c38ec7" };
     queryParams.q = $(".form-control").val().trim();
     queryParams.units = "imperial";
-    //console.log(queryURL+$.param(queryParams));
+    //console.log(queryURL + $.param(queryParams));
     return queryURL + $.param(queryParams);
+    
 }
 
 
 function paramsResponse(response) {
-   
-    var list = response.list;
-    console.log(list)
+
+    //var list = response.list;
+    //console.log(list)
+
+
     var icon = response.list[0].weather[0].icon;
     var iconImage = `http://openweathermap.org/img/wn/${icon}@2x.png`;
     var time = response.list[0].dt;
@@ -40,12 +49,32 @@ function paramsResponse(response) {
     var humidity = $("<p>").html("Humidity: " + currentHumidity + "%").addClass("humidity");
     var windS = $("<p>").html("Wind Speed: " + currentWindSpeed + "MPH").addClass("windS")
 
+    
+    $(".jumbotron").empty(cityInfo, temp, humidity, windS);
     $(".jumbotron").append(cityInfo, temp, humidity, windS);
     
-    for (var i = 8; i <= 40; i=i+8){
-        console.log(i);
+
+    $(".weatherDays").empty();
+    for (var i = 7; i <= 39; i = i + 8) {
+        var iconD = response.list[i].weather[0].icon;
+        var iconImageD = `http://openweathermap.org/img/wn/${iconD}@2x.png`;
+        var timeD = response.list[i].dt;
+        var temperatureD = response.list[i].main.temp;
+        var humidityD = response.list[i].main.humidity;
+
+        $(".weatherDays").append(
+            `<div class="card" style="width: 18rem;"> 
+            <div class="card-body">
+            <p class="card-title InfoDays">${timeConvertion(timeD)}</p>
+            <img src = ${iconImageD}>
+            <p class="card-subtitle mb-2 text-muted temp">Temp: ${temperatureD}°F</p>
+            <p class="card-text humidity">Humidity: ${humidityD}%</p>
+            </div>
+            </div>`
+        );
+
     }
-  
+    
 }
 
 function timeConvertion(time) {

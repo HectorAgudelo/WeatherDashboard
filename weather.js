@@ -93,11 +93,12 @@ function cityInput(res) {
     var input = $(".form-control").val().trim();
     if (res) {
         cities.push(input);
-    } 
+    }
 
-    var li = $('<li>').attr("value", 5).html(input).addClass(input)
-
-
+    localStorage.setItem("cities", JSON.stringify(cities));
+    cities = JSON.parse(localStorage.getItem("cities"));
+   
+    var li = $('<li>').attr("value", 5).html().addClass(input)
     $("#searched").append(li);
     console.log(cities);
 }

@@ -3,11 +3,10 @@
 //api.openweathermap.org/data/2.5/forecast?q=newyork&appid=553d585c0846075ef308968537c38ec7
 //api.openweathermap.org/data/2.5/forecast/daily?q=chicago&cnt=5&appid=402816eb769161d2bf2eccbb8107f1e4
 
-
 $(".btn").click(function (event) {
-    
+
     event.preventDefault();
-    
+
 
     var queryURL = inputCity();
 
@@ -15,23 +14,26 @@ $(".btn").click(function (event) {
         url: queryURL,
         method: "GET",
     }).then(paramsResponse);
-    
+
+
 })
 
 function inputCity() {
-    
+
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
-    var queryParams = { "appid": "553d585c0846075ef308968537c38ec7" };
+    var queryParams = {
+        "appid": "553d585c0846075ef308968537c38ec7"
+    };
     queryParams.q = $(".form-control").val().trim();
     queryParams.units = "imperial";
     //console.log(queryURL + $.param(queryParams));
     return queryURL + $.param(queryParams);
-    
+
 }
 
 
 function paramsResponse(response) {
-
+    cityInput(response);
     //var list = response.list;
     //console.log(list)
 
@@ -49,10 +51,10 @@ function paramsResponse(response) {
     var humidity = $("<p>").html("Humidity: " + currentHumidity + "%").addClass("humidity");
     var windS = $("<p>").html("Wind Speed: " + currentWindSpeed + "MPH").addClass("windS")
 
-    
+
     $(".jumbotron").empty(cityInfo, temp, humidity, windS);
     $(".jumbotron").append(cityInfo, temp, humidity, windS);
-    
+
 
     $(".weatherDays").empty();
     for (var i = 7; i <= 39; i = i + 8) {
@@ -74,11 +76,28 @@ function paramsResponse(response) {
         );
 
     }
-    
+
 }
 
 function timeConvertion(time) {
     var myDate = new Date(time * 1000);
     var fixDate = myDate.toDateString();
     return fixDate;
+}
+
+
+var cities = [];
+
+function cityInput(res) {
+
+    var input = $(".form-control").val().trim();
+    if (res) {
+        cities.push(input);
+    } 
+
+    var li = $('<li>').attr("value", 5).html(input).addClass(input)
+
+
+    $("#searched").append(li);
+    console.log(cities);
 }

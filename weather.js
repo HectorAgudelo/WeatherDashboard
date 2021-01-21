@@ -35,7 +35,7 @@ function inputCity() {
 function paramsResponse(response) {
     cityInput(response);
     //var list = response.list;
-    //console.log(list)
+
 
 
     var icon = response.list[0].weather[0].icon;
@@ -86,6 +86,7 @@ function timeConvertion(time) {
 }
 
 
+
 var cities = [];
 
 function cityInput(res) {
@@ -95,10 +96,12 @@ function cityInput(res) {
         cities.push(input);
     }
 
-    localStorage.setItem("cities", JSON.stringify(cities));
-    cities = JSON.parse(localStorage.getItem("cities"));
-   
-    var li = $('<li>').attr("value", 5).html().addClass(input)
-    $("#searched").append(li);
-    console.log(cities);
+    for (var i = 0; i <= cities.length; i++) {
+        console.log(cities);
+        localStorage.setItem("cities", JSON.stringify(cities));
+        localStorage.getItem(cities);
+
+        var li = $('<li>').attr("value", i).html(i).addClass(i)
+        $("#searched").append(li);
+    }
 }

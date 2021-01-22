@@ -93,15 +93,23 @@ function cityInput(res) {
 
     var input = $(".form-control").val().trim();
     if (res) {
-        cities.push(input);
+        cities.unshift(input);
     }
+    localStorage.setItem("cities", JSON.stringify(cities));
+    var citiesStore = JSON.parse(localStorage.getItem("cities"));
 
-    for (var i = 0; i <= cities.length; i++) {
-        console.log(cities);
-        localStorage.setItem("cities", JSON.stringify(cities));
-        localStorage.getItem(cities);
-
-        var li = $('<li>').attr("value", i).html(i).addClass(i)
-        $("#searched").append(li);
+    if (citiesStore.length > 1) {
+        cities.pop();
     }
+    citiesStore.forEach(element => {
+        $('#searched').append(`<li>${element}</li>`);
+    });
 }
+
+
+// for (var i = 0; i < citiesStore.length; i) {
+// var li = $('<li>').html(citiesStore[i]).addClass(citiesStore[i]);
+
+// }
+// var cityArray = (localStorage.getItem("cities"));
+// console.log(cityArray)

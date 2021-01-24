@@ -2,12 +2,21 @@
 //key: 553d585c0846075ef308968537c38ec7
 //api.openweathermap.org/data/2.5/forecast?q=newyork&appid=553d585c0846075ef308968537c38ec7
 //api.openweathermap.org/data/2.5/forecast/daily?q=chicago&cnt=5&appid=402816eb769161d2bf2eccbb8107f1e4
+$(".botom").click(function (event) {
 
+    event.preventDefault();
+    var queryURL = inputCityList();
+console.log(queryURL);
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(paramsResponse);
+
+
+})
 $(".btn").click(function (event) {
 
     event.preventDefault();
-
-
     var queryURL = inputCity();
 console.log(queryURL);
     $.ajax({
@@ -23,11 +32,21 @@ function inputCity() {
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var queryParams = {
         "appid": "553d585c0846075ef308968537c38ec7"
+    }; 
+    queryParams.q = $(".form-control").val().trim();
+    queryParams.units = "imperial";
+    return queryURL + $.param(queryParams);
+}
+
+function inputCityList() {
+
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
+    var queryParams = {
+        "appid": "553d585c0846075ef308968537c38ec7"
     };
     // put a city from the list when click here, give variable name queryParams.q. use a conditional if to switch between the 2 depending where the user clicks.
-    queryParams.q = $(".city").html();
+    queryParams.q = $(".botom").html();
     console.log(queryParams.q)
-    queryParams.q = $(".form-control").val().trim();
     queryParams.units = "imperial";
     //console.log(queryURL + $.param(queryParams));
     return queryURL + $.param(queryParams);
@@ -35,12 +54,10 @@ function inputCity() {
 }
 
 
+
 function paramsResponse(response) {
     cityInput(response);
    
-
-
-
     var icon = response.list[0].weather[0].icon;
     var iconImage = `http://openweathermap.org/img/wn/${icon}@2x.png`;
     var time = response.list[0].dt;
@@ -104,14 +121,14 @@ function cityInput(res) {
     }
     localStorage.setItem("cities", JSON.stringify(cities));
     cities = JSON.parse(localStorage.getItem("cities"));
-    $('#searched').html('');
+    $('.btn-group-vertical').html('');
     cities.forEach(element => {
-        $('#searched').append(`<li class="city">${element}</li>`);
+        $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}">${element}</button>`);
     });
 }
 
 cities = JSON.parse(localStorage.getItem("cities"));
 
 cities.forEach(element => {
-    $('#searched').append(`<li class="city">${element}</li>`);
+    $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}">${element}</button>`);
 });

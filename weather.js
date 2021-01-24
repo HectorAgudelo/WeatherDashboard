@@ -9,7 +9,7 @@ $(".btn").click(function (event) {
 
 
     var queryURL = inputCity();
-
+console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -24,6 +24,9 @@ function inputCity() {
     var queryParams = {
         "appid": "553d585c0846075ef308968537c38ec7"
     };
+    // put a city from the list when click here, give variable name queryParams.q. use a conditional if to switch between the 2 depending where the user clicks.
+    queryParams.q = $(".city").html();
+    console.log(queryParams.q)
     queryParams.q = $(".form-control").val().trim();
     queryParams.units = "imperial";
     //console.log(queryURL + $.param(queryParams));
@@ -34,7 +37,7 @@ function inputCity() {
 
 function paramsResponse(response) {
     cityInput(response);
-    //var list = response.list;
+   
 
 
 
@@ -92,24 +95,23 @@ var cities = [];
 function cityInput(res) {
 
     var input = $(".form-control").val().trim();
+
     if (res) {
         cities.unshift(input);
     }
-    localStorage.setItem("cities", JSON.stringify(cities));
-    var citiesStore = JSON.parse(localStorage.getItem("cities"));
-
-    if (citiesStore.length > 1) {
+    if (cities.length > 5) {
         cities.pop();
     }
-    citiesStore.forEach(element => {
-        $('#searched').append(`<li>${element}</li>`);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    cities = JSON.parse(localStorage.getItem("cities"));
+    $('#searched').html('');
+    cities.forEach(element => {
+        $('#searched').append(`<li class="city">${element}</li>`);
     });
 }
 
+cities = JSON.parse(localStorage.getItem("cities"));
 
-// for (var i = 0; i < citiesStore.length; i) {
-// var li = $('<li>').html(citiesStore[i]).addClass(citiesStore[i]);
-
-// }
-// var cityArray = (localStorage.getItem("cities"));
-// console.log(cityArray)
+cities.forEach(element => {
+    $('#searched').append(`<li class="city">${element}</li>`);
+});

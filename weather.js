@@ -131,7 +131,10 @@ function cityInput(res) {
     if (cities.length > 5) {
         cities.pop();
     }
-    localStorage.setItem("cities", JSON.stringify(cities));
+
+    var newCities = [...new Set(cities)]; 
+
+    localStorage.setItem("cities", JSON.stringify(newCities));
     cities = JSON.parse(localStorage.getItem("cities"));
     $('.btn-group-vertical').html('');
     cities.forEach(element => {

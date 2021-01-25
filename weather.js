@@ -14,6 +14,7 @@ console.log(queryURL);
 
 
 })
+
 $(".btn").click(function (event) {
 
     event.preventDefault();
@@ -22,7 +23,7 @@ console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
-    }).then(paramsResponse);
+    }).then((res)=>paramsResponse(res));
 
 
 })
@@ -38,14 +39,14 @@ function inputCity() {
     return queryURL + $.param(queryParams);
 }
 
-function inputCityList() {
+function inputCityList(city) {
 
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var queryParams = {
         "appid": "553d585c0846075ef308968537c38ec7"
     };
     // put a city from the list when click here, give variable name queryParams.q. use a conditional if to switch between the 2 depending where the user clicks.
-    queryParams.q = $(".botom").html();
+    queryParams.q = city;
     console.log(queryParams.q)
     queryParams.units = "imperial";
     //console.log(queryURL + $.param(queryParams));
@@ -55,9 +56,10 @@ function inputCityList() {
 
 
 
-function paramsResponse(response) {
-    cityInput(response);
-   
+function paramsResponse(response, prevSearch=false) {
+    if (!prevSearch) {
+        cityInput(response);
+    }
     var icon = response.list[0].weather[0].icon;
     var iconImage = `http://openweathermap.org/img/wn/${icon}@2x.png`;
     var time = response.list[0].dt;
@@ -67,7 +69,7 @@ function paramsResponse(response) {
     var currentWindSpeed = response.list[0].wind.speed;
 
     var cityInfo = $(`<h5>${cityName} (${timeConvertion(time)}) <img src = ${iconImage}></h5>`).addClass("cityInfo");
-    var temp = $("<p>").html("Temperature: " + currentTemperature + "°F").addClass("temp");
+    var temp = $("<p>").html("Temperature: " + currentTemperature + "Â°F").addClass("temp");
     var humidity = $("<p>").html("Humidity: " + currentHumidity + "%").addClass("humidity");
     var windS = $("<p>").html("Wind Speed: " + currentWindSpeed + "MPH").addClass("windS")
 
@@ -89,7 +91,7 @@ function paramsResponse(response) {
             <div class="card-body">
             <p class="card-title InfoDays">${timeConvertion(timeD)}</p>
             <img src = ${iconImageD}>
-            <p class="card-subtitle mb-2 text-muted temp">Temp: ${temperatureD}°F</p>
+            <p class="card-subtitle mb-2 text-muted temp">Temp: ${temperatureD}Â°F</p>
             <p class="card-text humidity">Humidity: ${humidityD}%</p>
             </div>
             </div>`
@@ -106,6 +108,16 @@ function timeConvertion(time) {
 }
 
 
+function handleBtn(btn){
+    const city = $(btn).text();
+    console.log(city, ' clicked');
+    var queryURL = inputCityList(city);
+console.log(queryURL);
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then((res)=>paramsResponse(res, true));
+}
 
 var cities = [];
 
@@ -123,12 +135,12 @@ function cityInput(res) {
     cities = JSON.parse(localStorage.getItem("cities"));
     $('.btn-group-vertical').html('');
     cities.forEach(element => {
-        $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}">${element}</button>`);
+        $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}" onclick="handleBtn(this)">${element}</button>`);
     });
 }
 
-cities = JSON.parse(localStorage.getItem("cities"));
+cities = JSON.parse(localStorage.getItem("cities")) || [];
 
 cities.forEach(element => {
-    $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}">${element}</button>`);
+    $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}" onclick="handleBtn(this)">${element}</button>`);
 });

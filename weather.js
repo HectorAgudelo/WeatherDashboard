@@ -6,7 +6,7 @@ $(".botom").click(function (event) {
 
     event.preventDefault();
     var queryURL = inputCityList();
-console.log(queryURL);
+    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -19,11 +19,11 @@ $(".btn").click(function (event) {
 
     event.preventDefault();
     var queryURL = inputCity();
-console.log(queryURL);
+    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
-    }).then((res)=>paramsResponse(res));
+    }).then((res) => paramsResponse(res));
 
 
 })
@@ -33,7 +33,7 @@ function inputCity() {
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var queryParams = {
         "appid": "553d585c0846075ef308968537c38ec7"
-    }; 
+    };
     queryParams.q = $(".form-control").val().trim();
     queryParams.units = "imperial";
     return queryURL + $.param(queryParams);
@@ -56,7 +56,7 @@ function inputCityList(city) {
 
 
 
-function paramsResponse(response, prevSearch=false) {
+function paramsResponse(response, prevSearch = false) {
     if (!prevSearch) {
         cityInput(response);
     }
@@ -108,15 +108,15 @@ function timeConvertion(time) {
 }
 
 
-function handleBtn(btn){
+function handleBtn(btn) {
     const city = $(btn).text();
     console.log(city, ' clicked');
     var queryURL = inputCityList(city);
-console.log(queryURL);
+    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
-    }).then((res)=>paramsResponse(res, true));
+    }).then((res) => paramsResponse(res, true));
 }
 
 var cities = [];
@@ -124,26 +124,29 @@ var cities = [];
 function cityInput(res) {
 
     var input = $(".form-control").val().trim();
-
+    
     if (res) {
         cities.unshift(input);
     }
-    if (cities.length > 5) {
-        cities.pop();
-    }
+    
+    var newCities = [...new Set(cities)];
 
-    var newCities = [...new Set(cities)]; 
+    if (newCities.length > 5) {
+        newCities.pop();
+    }
+    
 
     localStorage.setItem("cities", JSON.stringify(newCities));
-    cities = JSON.parse(localStorage.getItem("cities"));
     $('.btn-group-vertical').html('');
+    setButtons();
+}
+
+function setButtons() {
+    cities = JSON.parse(localStorage.getItem("cities")) || [];
+
     cities.forEach(element => {
         $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}" onclick="handleBtn(this)">${element}</button>`);
     });
 }
 
-cities = JSON.parse(localStorage.getItem("cities")) || [];
-
-cities.forEach(element => {
-    $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}" onclick="handleBtn(this)">${element}</button>`);
-});
+setButtons();

@@ -1,35 +1,13 @@
-//api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-//key: 553d585c0846075ef308968537c38ec7
-//api.openweathermap.org/data/2.5/forecast?q=newyork&appid=553d585c0846075ef308968537c38ec7
-//api.openweathermap.org/data/2.5/forecast/daily?q=chicago&cnt=5&appid=402816eb769161d2bf2eccbb8107f1e4
-$(".botom").click(function (event) {
-
-    event.preventDefault();
-    var queryURL = inputCityList();
-    console.log(queryURL);
-    $.ajax({
-        url: queryURL,
-        method: "GET",
-    }).then(paramsResponse);
-
-
-})
-
 $(".btn").click(function (event) {
-
     event.preventDefault();
     var queryURL = inputCity();
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
     }).then((res) => paramsResponse(res));
-
-
 })
 
 function inputCity() {
-
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var queryParams = {
         "appid": "553d585c0846075ef308968537c38ec7"
@@ -40,21 +18,14 @@ function inputCity() {
 }
 
 function inputCityList(city) {
-
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var queryParams = {
         "appid": "553d585c0846075ef308968537c38ec7"
     };
-    // put a city from the list when click here, give variable name queryParams.q. use a conditional if to switch between the 2 depending where the user clicks.
     queryParams.q = city;
-    console.log(queryParams.q)
     queryParams.units = "imperial";
-    //console.log(queryURL + $.param(queryParams));
     return queryURL + $.param(queryParams);
-
 }
-
-
 
 function paramsResponse(response, prevSearch = false) {
     if (!prevSearch) {
@@ -73,10 +44,8 @@ function paramsResponse(response, prevSearch = false) {
     var humidity = $("<p>").html("Humidity: " + currentHumidity + "%").addClass("humidity");
     var windS = $("<p>").html("Wind Speed: " + currentWindSpeed + "MPH").addClass("windS")
 
-
     $(".jumbotron").empty(cityInfo, temp, humidity, windS);
     $(".jumbotron").append(cityInfo, temp, humidity, windS);
-
 
     $(".weatherDays").empty();
     for (var i = 7; i <= 39; i = i + 8) {
@@ -96,9 +65,7 @@ function paramsResponse(response, prevSearch = false) {
             </div>
             </div>`
         );
-
     }
-
 }
 
 function timeConvertion(time) {
@@ -107,12 +74,9 @@ function timeConvertion(time) {
     return fixDate;
 }
 
-
 function handleBtn(btn) {
     const city = $(btn).text();
-    console.log(city, ' clicked');
     var queryURL = inputCityList(city);
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -122,20 +86,14 @@ function handleBtn(btn) {
 var cities = [];
 
 function cityInput(res) {
-
     var input = $(".form-control").val().trim();
-    
     if (res) {
         cities.unshift(input);
     }
-    
     var newCities = [...new Set(cities)];
-
     if (newCities.length > 5) {
         newCities.pop();
     }
-    
-
     localStorage.setItem("cities", JSON.stringify(newCities));
     $('.btn-group-vertical').html('');
     setButtons();
@@ -143,7 +101,6 @@ function cityInput(res) {
 
 function setButtons() {
     cities = JSON.parse(localStorage.getItem("cities")) || [];
-
     cities.forEach(element => {
         $('.btn-group-vertical').append(`<button type="button" class="botom btn btn-primary ${element}" onclick="handleBtn(this)">${element}</button>`);
     });

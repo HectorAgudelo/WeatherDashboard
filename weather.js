@@ -113,7 +113,7 @@ function setButtons() {
   cities = JSON.parse(localStorage.getItem("cities")) || [];
   cities.forEach((element) => {
     $(".btn-group-vertical").append(
-      `<button type="button" class="btn btn-outline-success ${element}" onclick="handleBtn(this)">${element}</button>`
+      `<button type="button" class="btn btn-outline-info ${element}" onclick="handleBtn(this)">${element}</button>`
     );
   });
 }

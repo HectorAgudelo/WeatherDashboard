@@ -1,0 +1,178 @@
+* {
+  margin: 0%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.container-fluid {
+  margin: inherit;
+  width: 100%;
+  height: auto;
+}
+
+.jumbo {
+  margin-top: 20px;
+  padding-top: 0px;
+  margin-bottom: 20px;
+  padding-right: 32px;
+  padding-bottom: 0px;
+  height: 260px;
+  padding-right: 0px;
+  padding-left: 0px;
+  align-items: center;
+  background-color: white;
+  border: 8px;
+  border-style: ridge;
+}
+.jumbotron > p {
+  text-align: center;
+  padding: 0px;
+  margin-top: 0px;
+}
+
+#header {
+  margin: 0%;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 50px;
+  text-align: center;
+  background-color: lightslategray;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.form-inline {
+  width: 100%;
+}
+
+.btn-group-vertical {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.card {
+  align-items: center;
+  width: 195px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.listCards {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.weatherDays {
+  align-items: center;
+  width: 100%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+@media (max-width: 702px) {
+  .card {
+    align-items: center;
+    width: 195px;
+    margin-left: 40px;
+    margin-right: 11px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  body {
+    font-family: "lato", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    width: 100%;
+  }
+
+  #header {
+    margin: 0%;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 50px;
+    text-align: center;
+    background-color: lightslategray;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .jumbo {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    border: 5px;
+    border-style: ridge;
+  }
+  .card {
+    align-items: center;
+    width: 195px;
+    margin-left: 119px;
+    margin-right: 152px;
+  }
+  .weatherDays {
+    align-items: center;
+    width: 100%;
+    margin-right: 10%;
+    margin-left: 10%;
+  }
+  .listCards {
+    margin-left: 0%;
+    margin-right: 0%;
+    padding-left: 0px;
+  }
+}
+@media (max-width: 512px) {
+  .card {
+    align-items: center;
+    width: 195px;
+    margin-left: 82px;
+    margin-right: 93px;
+  }
+}
+@media (max-width: 411px) {
+  .card {
+    align-items: center;
+    width: 195px;
+    margin-left: 37px;
+    margin-right: 54px;
+  }
+}
+
+@media (max-width: 320.98px) {
+  .card {
+    align-items: center;
+    width: 195px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media (min-width: 991.98px) {
+  .card {
+    align-items: center;
+    width: 195px;
+    margin-left: 0px;
+    margin-right: 13px;
+  }
+}
+
+@media (max-width: 1450px) {
+  .navbar {
+    background-color: white;
+  }
+}
+
+@media (min-width: 1450px) {
+  .navbar {
+    background-color: #f8f9fa;
+  }
+}
